@@ -2,7 +2,7 @@
 
 - name: "Lookup route url for {{ route }}"
   shell: "oc get route {{ route }} -o jsonpath='{ .spec.host }'"
-  register: hostname
+  register: url
   when:
   - route is defined
   - route|trim != ''
@@ -15,16 +15,16 @@
   set_fact:
     retries: "{{ retries | default(3) }}"
 
-- name: "Wait for {{ protocol }}://{{ hostname.stdout }} to respond with status: {{ status }}"
+- name: "Wait for {{ protocol }}://{{ url.stdout }} to respond with status: {{ status }}"
   uri:
-    url: "{{ protocol }}://{{ hostname.stdout }}"
+    url: "{{ protocol }}://{{ url.stdout }}"
   register: rc
   until: rc.status|trim|int == status|trim|int
   retries: "{{ retries|int }}"
   delay: "{{ delay|int }}"
   when:
-  - hostname.stdout is defined
-  - hostname.stdout|trim != ''
+  - url.stdout is defined
+  - url.stdout|trim != ''
   - protocol is defined
   - protocol|trim != ''
   - status is defined
