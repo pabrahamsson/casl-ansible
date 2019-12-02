@@ -16,7 +16,7 @@ Role Variables
 | api_version | The api_version of the resource | yes ||
 | definition | The patch definition | yes ||
 | kind | The kind of the resource | yes ||
-| merge_type | A list of merge types ("strategic-merge, merge, json") | no | strategic-merge |
+| merge_type | A list of merge types ("strategic-merge, merge") | no | strategic-merge |
 | name | The name of the resource | yes ||
 | namespace | The namespace of the resource | no ||
 
